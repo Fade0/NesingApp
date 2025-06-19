@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.notifications.NotificationsFragment">
+
+    <TextView
+        android:id="@+id/text_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button_traceroute_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="google.com"
+        app:layout_constraintTop_toBottomOf="@id/text_notifications"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/button_traceroute_amazon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="amazon.com"
+        app:layout_constraintTop_toBottomOf="@id/button_traceroute_google"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/button_traceroute_microsoft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="microsoft.com"
+        app:layout_constraintTop_toBottomOf="@id/button_traceroute_amazon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/button_traceroute_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="facebook.com"
+        app:layout_constraintTop_toBottomOf="@id/button_traceroute_microsoft"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/button_traceroute_allegro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="allegro.pl"
+        app:layout_constraintTop_toBottomOf="@id/button_traceroute_facebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/button_traceroute_wp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wp.pl"
+        app:layout_constraintTop_toBottomOf="@id/button_traceroute_allegro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/edittext_traceroute_custom_url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter custom URL"
+        android:inputType="textUri"
+        app:layout_constraintTop_toBottomOf="@id/button_traceroute_wp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <Button
+        android:id="@+id/button_traceroute_custom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Traceroute Custom URL"
+        app:layout_constraintTop_toBottomOf="@id/edittext_traceroute_custom_url"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <ScrollView
+        android:id="@+id/scrollview_traceroute_results"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/button_traceroute_custom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/text_traceroute_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Traceroute results will appear here"
+            android:textAlignment="textStart"
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:background="#f0f0f0"
+            android:scrollbars="vertical" />
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
