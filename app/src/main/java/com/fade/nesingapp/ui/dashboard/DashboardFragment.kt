@@ -80,6 +80,63 @@ class DashboardFragment : Fragment() {
             }
         }
 
+        // Port scanning UI elements
+        val portscanGoogleButton: Button = binding.buttonPortscanGoogle
+        val portscanAmazonButton: Button = binding.buttonPortscanAmazon
+        val portscanMicrosoftButton: Button = binding.buttonPortscanMicrosoft
+        val portscanFacebookButton: Button = binding.buttonPortscanFacebook
+        val portscanAllegroButton: Button = binding.buttonPortscanAllegro
+        val portscanWpButton: Button = binding.buttonPortscanWp
+        val portscanCustomButton: Button = binding.buttonPortscanCustom
+        val portscanCustomUrlEditText = binding.edittextPortscanCustomUrl
+        val portscanCustomNameEditText = binding.edittextPortscanCustomName
+        val portscanResultTextView: TextView = binding.textPortscanResult
+
+        fun setupPortscanButton(button: Button, url: String) {
+            button.setOnClickListener {
+                portscanResultTextView.text = ""
+                lifecycleScope.launch {
+                    val openPorts = portScanHost(url, 100, 120)
+                    android.util.Log.d("PortScan", "Open ports for $url: $openPorts")
+                    portscanResultTextView.text = if (openPorts.isEmpty()) {
+                        "No open ports found."
+                    } else {
+                        "Open ports:\n" + openPorts.joinToString(separator = "\n")
+                    }
+                }
+            }
+        }
+
+        setupPortscanButton(portscanGoogleButton, "google.com")
+        setupPortscanButton(portscanAmazonButton, "amazon.com")
+        setupPortscanButton(portscanMicrosoftButton, "microsoft.com")
+        setupPortscanButton(portscanFacebookButton, "facebook.com")
+        setupPortscanButton(portscanAllegroButton, "allegro.pl")
+        setupPortscanButton(portscanWpButton, "wp.pl")
+
+        portscanCustomButton.setOnClickListener {
+            val url = portscanCustomUrlEditText.text.toString()
+            val name = portscanCustomNameEditText.text.toString()
+            if (url.isBlank()) {
+                portscanResultTextView.text = "Please enter a URL or IP."
+                return@setOnClickListener
+            }
+            portscanResultTextView.text = ""
+            lifecycleScope.launch {
+                val openPorts = portScanHost(url, 1, 1024)
+                android.util.Log.d("PortScan", "Open ports for $url ($name): $openPorts")
+                val displayName = if (name.isBlank()) url else name
+                portscanResultTextView.text = if (openPorts.isEmpty()) {
+                    "$displayName: No open ports found."
+                } else {
+                    "$displayName: Open ports:\n" + openPorts.joinToString(separator = "\n")
+                }
+            }
+        }
+
+        // Add hint log for port scan custom name field
+        android.util.Log.d("PortScan", "Hint: Enter a friendly name for the target in the custom name field. This is optional and used for labeling scan results.")
+
         return root
     }
 
@@ -141,5 +198,27 @@ class DashboardFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private suspend fun portScanHost(host: String, startPort: Int, endPort: Int): List<String> {
+        return withContext(Dispatchers.IO) {
+            val openPorts = mutableListOf<String>()
+            try {
+                val address = java.net.InetAddress.getByName(host)
+                for (port in startPort..endPort) {
+                    try {
+                        val socket = java.net.Socket()
+                        socket.connect(java.net.InetSocketAddress(address, port), 100)
+                        socket.close()
+                        openPorts.add(port.toString())
+                    } catch (_: Exception) {
+
+                    }
+                }
+            } catch (e: Exception) {
+                openPorts.add("Port scan failed: ${e.localizedMessage}")
+            }
+            openPorts
+        }
     }
 }

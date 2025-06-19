@@ -96,16 +96,13 @@ class NotificationsFragment : Fragment() {
                 val address = InetAddress.getByName(host)
                 val socket = DatagramSocket()
                 socket.soTimeout = timeout
-
                 for (ttl in 1..maxHops) {
                 socket.soTimeout = timeout
                 socket.setSoTimeout(timeout)
-
                 val buf = ByteArray(32)
                 val packet = DatagramPacket(buf, buf.size, address, port)
                 val sendTime = System.currentTimeMillis()
                 socket.send(packet)
-
                     try {
                         val recvPacket = DatagramPacket(ByteArray(512), 512)
                         socket.receive(recvPacket)
